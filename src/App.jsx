@@ -18,7 +18,7 @@ export const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [imageIsChosen, setImageIsChosen] = useState(false);
+  const [imageIsChosen, setImageIsChosen] = useState(null);
 
   useEffect(() => {
     if (!query) return;
@@ -69,12 +69,8 @@ export const App = () => {
     setImageIsChosen(image);
   }
 
-  function afterOpenModal() {
-    document.body.style.overflow = "hidden";
-  }
-
   function closeModal() {
-    document.body.style.overflow = "scroll";
+    // document.body.style.overflow = "scroll";
     setIsOpen(false);
   }
   return (
@@ -86,7 +82,6 @@ export const App = () => {
       {imageIsChosen && (
         <ImageModal
           isOpen={modalIsOpen}
-          afterOpenModal={afterOpenModal}
           onClose={closeModal}
           imageIsChosen={imageIsChosen}
         />
