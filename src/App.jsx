@@ -79,7 +79,7 @@ export const App = () => {
       <Toaster position="bottom-center" />
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {imageIsChosen && (
+      {modalIsOpen && (
         <ImageModal
           isOpen={modalIsOpen}
           onClose={closeModal}
