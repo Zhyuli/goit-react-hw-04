@@ -70,7 +70,7 @@ export const App = () => {
   }
 
   function closeModal() {
-    // document.body.style.overflow = "scroll";
+    setImageIsChosen(null);
     setIsOpen(false);
   }
   return (
@@ -82,7 +82,7 @@ export const App = () => {
       {modalIsOpen && (
         <ImageModal
           isOpen={modalIsOpen}
-          onClose={closeModal}
+          onRequestClose={closeModal}
           imageIsChosen={imageIsChosen}
         />
       )}
