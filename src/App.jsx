@@ -24,7 +24,7 @@ export const App = () => {
   useEffect(() => {
     if (!query) return;
 
-    async function fetchData() {
+    const fetchData = async () => {
       try {
         setError(false);
         setLoading(true);
@@ -43,7 +43,7 @@ export const App = () => {
       } finally {
         setLoading(false);
       }
-    }
+    };
     fetchData();
   }, [query, page]);
 
@@ -59,15 +59,15 @@ export const App = () => {
 
   // MODAL WINDOW
 
-  function openModal(image) {
+  const openModal = (image) => {
     setIsOpen(true);
     setImageIsChosen(image);
-  }
+  };
 
-  function closeModal() {
+  const closeModal = () => {
     setImageIsChosen(null);
     setIsOpen(false);
-  }
+  };
   return (
     <div>
       <SearchBar onSearch={handleNewSearch} />
