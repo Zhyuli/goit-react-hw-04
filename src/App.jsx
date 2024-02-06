@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Loader } from "./components/Loader/Loader";
 import { ErrorMessage } from "./components/ErrorMessage/ErrorMessage";
 import { ImageModal } from "./components/ImageModal/ImageModal";
+import { LoadMoreBtn } from "./components/LoadMoreBtn/LoadMoreBtn";
 
 const ACCESS_KEY = "4rlYc7OxOpquUNz5ZpM2xWYkEAyrp43fA5mmXeVJ2z0";
 axios.defaults.baseURL = "https://api.unsplash.com/";
@@ -27,7 +28,6 @@ export const App = () => {
       try {
         setError(false);
         setLoading(true);
-        setImages([]);
 
         const response = await axios.get(`search/photos`, {
           params: {
@@ -37,11 +37,7 @@ export const App = () => {
             per_page: 10,
           },
         });
-        if (page === 1) {
-          setImages(response.data.results);
-        } else {
-          setImages((prevImages) => [...prevImages, ...response.data.results]);
-        }
+        setImages((prevImages) => [...prevImages, ...response.data.results]);
       } catch (error) {
         setError(true);
       } finally {
@@ -52,7 +48,6 @@ export const App = () => {
   }, [query, page]);
 
   const handleNewSearch = (newQuery) => {
-    if (newQuery !== query || page !== 1) setQuery(newQuery);
     setPage(1);
     setQuery(newQuery);
     setImages([]);
@@ -76,6 +71,11 @@ export const App = () => {
   return (
     <div>
       <SearchBar onSearch={handleNewSearch} />
+      {images.length > 0 && (
+        <>
+          <ImageGallery images={images} onClick={openModal} />
+        </>
+      )}
       <Toaster position="bottom-center" />
       {loading && <Loader />}
       {error && <ErrorMessage />}
@@ -86,11 +86,8 @@ export const App = () => {
           imageIsChosen={imageIsChosen}
         />
       )}
-      {images.length > 0 && (
-        <>
-          <ImageGallery images={images} onClick={openModal} />
-          <button onClick={handleLoadMore}>Load more</button>
-        </>
+      {images.length > 0 && !loading && (
+        <LoadMoreBtn onClick={handleLoadMore} />
       )}
     </div>
   );
